@@ -1,16 +1,13 @@
-import os
+#!/usr/bin/env python3
+"""
+Test the weather function directly without MCP
+"""
+
 import requests
-from mcp.server.fastmcp import FastMCP
-from config import (
-    OPENWEATHERMAP_API_KEY,
-    WEATHER_API_BASE_URL,
-    WEATHER_UNITS,
-    SERVER_NAME
-)
 
-mcp = FastMCP(SERVER_NAME)
+# Import the weather function from serve.py
+from config import OPENWEATHERMAP_API_KEY, WEATHER_API_BASE_URL, WEATHER_UNITS
 
-@mcp.tool()
 def get_weather(location: str) -> dict:
     if not OPENWEATHERMAP_API_KEY:
         return {"error": "OPENWEATHERMAP_API_KEY is not set"}
@@ -31,8 +28,6 @@ def get_weather(location: str) -> dict:
         feels_like = data["main"]["feels_like"]
         humidity = data["main"]["humidity"]
         wind_speed = data["wind"]["speed"]
-
-        print(temperature)
         return {
             "location": data["name"],
             "weather": weather_description,
@@ -56,5 +51,36 @@ def get_weather(location: str) -> dict:
     except Exception as e:
         return {"error": f"An unexpected error occurred: {e}"}
 
+# Test the function
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    print("Testing Weather Function Directly")
+    print("=" * 50)
+    
+    # Test valid cities
+    test_cities = ["London", "New York", "Tokyo", "Paris"]
+    
+    for city in test_cities:
+        print(f"\nTesting: {city}")
+        result = get_weather(city)
+        
+        if "error" in result:
+            print(f"❌ Error: {result['error']}")
+        else:
+            print(f"✅ Success!")
+            print(f"   Location: {result['location']}")
+            print(f"   Weather: {result['weather']}")
+            print(f"   Temperature: {result['temperature_celsius']}")
+            print(f"   Feels like: {result['feels_like_celsius']}")
+            print(f"   Humidity: {result['humidity']}")
+            print(f"   Wind Speed: {result['wind_speed_mps']}")
+    
+    # Test invalid city
+    print(f"\nTesting invalid city: 'InvalidCity123'")
+    result = get_weather("InvalidCity123")
+    if "error" in result:
+        print(f"✅ Correctly handled error: {result['error']}")
+    else:
+        print(f"❌ Unexpected success for invalid city")
+    
+    print("\n" + "=" * 50)
+    print("Testing complete!") 
