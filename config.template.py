@@ -5,6 +5,10 @@
 # Get your API key from: https://openweathermap.org/api
 OPENWEATHERMAP_API_KEY = "YOUR_API_KEY_HERE"
 
+# Google Gemini API Configuration
+# Get your API key from: https://makersuite.google.com/app/apikey
+GOOGLE_GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"
+
 # API Settings
 WEATHER_API_BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 WEATHER_UNITS = "metric"  # Use "imperial" for Fahrenheit
