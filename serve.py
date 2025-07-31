@@ -32,7 +32,6 @@ def get_weather(location: str) -> dict:
         humidity = data["main"]["humidity"]
         wind_speed = data["wind"]["speed"]
 
-        print(temperature)
         return {
             "location": data["name"],
             "weather": weather_description,

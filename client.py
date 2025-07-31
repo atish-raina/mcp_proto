@@ -25,7 +25,6 @@ class State(TypedDict):
     messages: Annotated[List[AnyMessage], add_messages]
 
 async def create_graph(session):
-    # Load tools from MCP server
     tools = await load_mcp_tools(session)
 
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0, google_api_key=GOOGLE_GEMINI_API_KEY)
